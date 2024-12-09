@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <title>Result Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'results/styles.css' %}">
+</head>
+<body>
+    <h2>Result Details</h2>
+    <p>Course: {{ result.course }}</p>
+    <p>Marks: {{ result.marks }}</p>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

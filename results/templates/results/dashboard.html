@@ -1,0 +1,282 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <title>Dashboard</title>#}
+{#    {% load static %}#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'results/styles.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#    <h2>Dashboard</h2>#}
+{#    <table>#}
+{#        <tr>#}
+{#            <th>Course</th>#}
+{#            <th>Marks</th>#}
+{#        </tr>#}
+{#        {% for result in results %}#}
+{#        <tr>#}
+{#            <td>{{ result.course }}</td>#}
+{#            <td>{{ result.marks }}</td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#    <a href="{% url 'logout' %}">Logout</a>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="">#}
+{#<head>#}
+{#    <title>Dashboard</title>#}
+{#    {% load static %}#}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'results/styles.css' %}">#}
+{#</head>#}
+{#<body>#}
+{#    <h2>Dashboard</h2>#}
+{#    #}
+{#    <form id="courseMarksForm" method="post" action="{% url 'add_results' %}">#}
+{#        {% csrf_token %}#}
+{#        <div id="courseMarksContainer">#}
+{#            <div class="course-mark">#}
+{#                <input type="text" name="course[]" placeholder="Course">#}
+{#                <input type="text" name="marks[]" placeholder="Marks">#}
+{#                <button type="button" onclick="function removeCourseMark(param) {#}
+{#                #}
+{#                }#}
+{#                removeCourseMark(this)">Remove</button>#}
+{#            </div>#}
+{#        </div>#}
+{#        <button type="button" onclick="function addCourseMark() {#}
+{#        #}
+{#        }#}
+        {#addCourseMark()">Add Course and Marks</button>#}
+        {#<button type="submit">Submit</button>#}
+{#    </form>#}
+{##}
+{#    <table>#}
+{#        <tr>#}
+{#            <th>Course</th>#}
+{#            <th>Marks</th>#}
+{#        </tr>#}
+{#        {% for result in results %}#}
+{#        <tr>#}
+{#            <td>{{ result.course }}</td>#}
+{#            <td>{{ result.marks }}</td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#    </table>#}
+{#    <a href="{% url 'logout' %}">Logout</a>#}
+{##}
+{#    <script src="{% static 'results/scripts.js' %}"></script>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-card {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .summary-card h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .summary-card p {
+            font-size: 16px;
+            color: #555555;
+        }
+
+        .actions {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+
+        .table-container {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <nav>
+            <a href="/dashboard/">Home</a>
+            <a href="/add_results/">Add Results</a>
+            <a href="/view_results/">View Results</a>
+        </nav>
+    </header>
+    <div class="container">
+        <!-- Summary Section -->
+        <div class="summary">
+            <div class="summary-card">
+                <h2>Total Students</h2>
+                <p>20</p>
+            </div>
+            <div class="summary-card">
+                <h2>Total Courses</h2>
+                <p>6</p>
+            </div>
+            <div class="summary-card">
+                <h2>Average Marks</h2>
+                <p>75%</p>
+            </div>
+            <div class="summary-card">
+                <h2>Pass Rate</h2>
+                <p>85%</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions">
+            <button onclick="window.location.href='/add_results/'">Add Results</button>
+            <button onclick="window.location.href='/view_results/'">View Results</button>
+            <button>Generate Report</button>
+        </div>
+
+        <!-- Recent Results Table -->
+        <div class="table-container">
+            <h2>Recent Results</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Course</th>
+                        <th>Marks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Austine Mbaja</td>
+                        <td>Essential Skills</td>
+                        <td>95</td>
+                        <td><a href="/results/1/">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Janet Chepkirui</td>
+                        <td>Essential Skills</td>
+                        <td>90</td>
+                        <td><a href="/results/2/">View</a></td>
+                    </tr>
+                <tr>
+                    <td>Frank Mbaka</td>
+                    <td>Tvet Philosophy</td>
+                    <td>80</td>
+                    <td><a href="/results/3/">View</a></td>
+                </tr>
+                <tr>
+                    <td>Moses Mutai</td>
+                    <td>Tvet Philosophy</td>
+                    <td>78</td>
+                    <td><a href="/results/4/">View</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 Student Results Management System
+    </footer>
+</body>
+</html>

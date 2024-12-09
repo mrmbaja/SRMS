@@ -1,0 +1,7 @@
+project_root/
+├── static/
+│   ├── favicon.ico
+├── manage.py
+└── ...
+
+

@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    {% load static %}
+{#    <link rel="stylesheet" type="text/css" href="{% static 'results/styles.css' %}">#}
+<link rel="stylesheet" href="/static/results/styles.css">
+
+</head>
+<body>
+    <h2>Register</h2>
+    <form method="post">
+        {% csrf_token %}
+        Username: <label>
+        <input type="text" name="username">
+    </label><br>
+        Email: <label>
+        <input type="email" name="email">
+    </label><br>
+        Password: <label>
+        <input type="password" name="password">
+    </label><br>
+        Student ID: <label>
+        <input type="text" name="student_id">
+    </label><br>
+        <input type="submit" value="Register">
+    </form>
+</body>
+</html>
